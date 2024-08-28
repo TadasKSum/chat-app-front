@@ -3,24 +3,25 @@
 import React from 'react';
 import {useRouter} from "next/navigation";
 import Link from 'next/link';
-import usePublicStore from "@/store/publicStore";
 import usePrivateStore from "@/store/privateStore";
+import useLoginStore from "@/store/loginStore";
 import Cookies from "js-cookie";
 
 const Toolbar = () => {
 
     // Zustand
-    const {user, isLoggedIn, setIsLoggedIn} = usePrivateStore();
+    const {user} = usePrivateStore();
+    const {isLoggedIn, setIsLoggedIn} = useLoginStore()
 
     // Router
     const router = useRouter()
 
     // Function
     function logout() {
-        Cookies.remove("chatToken")
-        sessionStorage.removeItem("user")
-        setIsLoggedIn(false)
-        router.push("/")
+        Cookies.remove("chatToken");
+        sessionStorage.removeItem("user");
+        setIsLoggedIn(false);
+        router.push("/");
     }
 
     return (
@@ -47,9 +48,15 @@ const Toolbar = () => {
                         <li>
                             <Link href="/">Home</Link>
                         </li>
+                        <li>
+                            <Link href="/allusers">All Users</Link>
+                        </li>
                         {isLoggedIn ? <>
                             <li>
                                 <Link href="/profile">Profile</Link>
+                            </li>
+                            <li>
+                                <Link href="/conversations">Conversations</Link>
                             </li>
                         </> : <>
                             <li>
@@ -65,9 +72,15 @@ const Toolbar = () => {
                     <li>
                         <Link href="/">Home</Link>
                     </li>
+                    <li>
+                        <Link href="/allusers">All Users</Link>
+                    </li>
                     {isLoggedIn ? <>
                         <li>
                             <Link href="/profile">Profile</Link>
+                        </li>
+                        <li>
+                            <Link href="/conversations">Conversations</Link>
                         </li>
                     </> : <>
                         <li>
@@ -77,7 +90,7 @@ const Toolbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-            {isLoggedIn ?
+                {isLoggedIn ?
                     <div className="flex gap-3">
                         <div className="avatar tooltip tooltip-left" data-tip={user.nickname}>
                             <div className="w-12 rounded-full ring-primary ring-offset-base-100 ring ring-offset-1">

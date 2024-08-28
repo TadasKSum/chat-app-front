@@ -15,12 +15,10 @@ const usePrivateStore = create(
                 ...prevState,
                 user: { ...prevState.user, ...newUser },
             })),
-        isLoggedIn: false,
-        setIsLoggedIn: (loggedIn) => set({ isLoggedIn: loggedIn }),
     }), {
         name: "user",
         storage: createJSONStorage(() => sessionStorage),
-    })
+    }),
 )
 
 export default usePrivateStore;

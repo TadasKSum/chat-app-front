@@ -1,22 +1,22 @@
 "use client"
 
-import Image from "next/image";
 import Cookies from "js-cookie";
 import usePrivateStore from "@/store/privateStore";
-import usePublicStore from "@/store/publicStore";
+import useLoginStore from "@/store/loginStore";
 import http from "@/plugins/http";
 import {useEffect} from "react";
 
 export default function Home() {
 
     // Zustand
-    const {setUser, setIsLoggedIn} = usePrivateStore();
+    const {setUser} = usePrivateStore();
+    const {isLoggedIn, setIsLoggedIn} = useLoginStore()
 
     // Functions
     async function autoLogin() {
         // Check if cookie exists
         const token = Cookies.get("chatToken");
-        if (!token) return
+        if (!token) return setIsLoggedIn(false)
         // If yes make postAuth request
         const request = {
             type: "auto-login"
@@ -36,7 +36,9 @@ export default function Home() {
     }
 
     useEffect(() => {
-        autoLogin()
+        if(!isLoggedIn) {
+            autoLogin()
+        }
     }, []);
 
     return (

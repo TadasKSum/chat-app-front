@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useRouter} from "next/navigation";
 import http from "@/plugins/http";
 import usePrivateStore from "@/store/privateStore";
-import usePublicStore from "@/store/publicStore";
+import useLoginStore from "@/store/loginStore";
 import Cookies from 'js-cookie';
 
 const Page = () => {
@@ -20,7 +20,8 @@ const Page = () => {
     const passInput = useRef();
 
     // Zustand
-    const {setUser, setIsLoggedIn} = usePrivateStore()
+    const {user, setUser} = usePrivateStore()
+    const {isLoggedIn, setIsLoggedIn} = useLoginStore()
 
     // Router
     const router = useRouter()
@@ -57,10 +58,6 @@ const Page = () => {
     const rememberCheckboxControl = (event) => {
         setRememberMe(!rememberMe);
     };
-
-    useEffect(() => {
-        console.log(rememberMe)
-    }, [rememberMe]);
 
     return (
         <div className="flex flex-col items-center p-20 gap-2 pages-height">

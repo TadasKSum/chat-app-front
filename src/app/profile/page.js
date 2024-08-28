@@ -1,20 +1,15 @@
 "use client"
 
-import React, {useRef} from 'react';
+import React from 'react';
 import usePrivateStore from "@/store/privateStore";
-import usePublicStore from "@/store/publicStore";
-import http from "@/plugins/http";
 
 import User from "@/components/User";
 import ProfileSettings from "@/components/ProfileSettings";
 
 const Page = () => {
 
-    const pictureLinkInput = useRef();
-
     //zustand
     const {user} = usePrivateStore();
-    const {isLoggedIn} = usePublicStore();
 
     return (
         <div className="flex flex-col items-center p-5 gap-2 pages-height">
