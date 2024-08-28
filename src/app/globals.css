@@ -31,3 +31,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.pages-height {
+  min-height: 86vh;
+}
