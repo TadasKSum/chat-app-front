@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import Link from 'next/link';
 import usePrivateStore from "@/store/privateStore";
 import useLoginStore from "@/store/loginStore";
+import useConversationStore from "@/store/conversationStore";
 import Cookies from "js-cookie";
 
 const Toolbar = () => {
@@ -12,6 +13,7 @@ const Toolbar = () => {
     // Zustand
     const {user} = usePrivateStore();
     const {isLoggedIn, setIsLoggedIn} = useLoginStore()
+    const {conversations} = useConversationStore()
 
     // Router
     const router = useRouter()
@@ -20,6 +22,7 @@ const Toolbar = () => {
     function logout() {
         Cookies.remove("chatToken");
         sessionStorage.removeItem("user");
+        sessionStorage.removeItem("conversations");
         setIsLoggedIn(false);
         router.push("/");
     }
@@ -56,7 +59,7 @@ const Toolbar = () => {
                                 <Link href="/profile">Profile</Link>
                             </li>
                             <li>
-                                <Link href="/conversations">Conversations</Link>
+                                <Link href="/conversations">Conversations {conversations.length === 0 ? "" : <>{conversations.length}</>}</Link>
                             </li>
                         </> : <>
                             <li>
@@ -80,7 +83,7 @@ const Toolbar = () => {
                             <Link href="/profile">Profile</Link>
                         </li>
                         <li>
-                            <Link href="/conversations">Conversations</Link>
+                            <Link href="/conversations">Conversations {conversations.length === 0 ? "" : <span className="badge badge-info">{conversations.length}</span>}</Link>
                         </li>
                     </> : <>
                         <li>

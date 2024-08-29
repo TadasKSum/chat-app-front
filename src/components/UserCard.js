@@ -2,6 +2,7 @@ import React from 'react';
 import http from "@/plugins/http";
 import usePrivateStore from "@/store/privateStore";
 import useLoginStore from "@/store/loginStore";
+import useConversationStore from "@/store/conversationStore";
 import {useRouter} from "next/navigation";
 
 const UserCard = ({profile}) => {
@@ -11,6 +12,7 @@ const UserCard = ({profile}) => {
     // Zustand
     const {user} = usePrivateStore()
     const {isLoggedIn} = useLoginStore()
+    const {conversations, setConversations} = useConversationStore()
 
     // Functions
     function navigate() {
@@ -29,9 +31,10 @@ const UserCard = ({profile}) => {
 
         const res = await http.postAuth("/start-conversation", data, token)
         if(res.success) {
-            console.log(res)
+            setConversations(res.data)
+            return router.push("/conversations")
         } else {
-            console.log(res.message)
+            return alert(res.message)
         }
     }
 

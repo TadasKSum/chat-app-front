@@ -60,13 +60,12 @@ const http = {
                 });
         });
     },
-    getAuth: (url, token, userId) => {
+    getAuth: (url, token) => {
         const options = {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: token,
-                "userId": userId,
             },
         };
         return new Promise((resolve) => {

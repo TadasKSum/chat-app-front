@@ -35,3 +35,7 @@ body {
 .pages-height {
   min-height: 86vh;
 }
+
+.component-height {
+  min-height: 81vh;
+}
