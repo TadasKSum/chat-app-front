@@ -6,6 +6,7 @@ import Link from 'next/link';
 import usePrivateStore from "@/store/privateStore";
 import useLoginStore from "@/store/loginStore";
 import useConversationStore from "@/store/conversationStore";
+import useSingleTalk from "@/store/singleConversation";
 import Cookies from "js-cookie";
 
 const Toolbar = () => {
@@ -23,8 +24,13 @@ const Toolbar = () => {
         Cookies.remove("chatToken");
         sessionStorage.removeItem("user");
         sessionStorage.removeItem("conversations");
+        sessionStorage.removeItem("talk")
         setIsLoggedIn(false);
         router.push("/");
+    }
+
+    function navLogin() {
+        router.push("/login")
     }
 
     return (
@@ -59,7 +65,11 @@ const Toolbar = () => {
                                 <Link href="/profile">Profile</Link>
                             </li>
                             <li>
-                                <Link href="/conversations">Conversations {conversations.length === 0 ? "" : <>{conversations.length}</>}</Link>
+                                <Link href="/conversations">Conversations {conversations.length === 0 ? "" :
+                                    <span className="badge badge-info">{conversations.length}</span>}</Link>
+                            </li>
+                            <li>
+                                <Link href="/chat">Chat</Link>
                             </li>
                         </> : <>
                             <li>
@@ -83,7 +93,11 @@ const Toolbar = () => {
                             <Link href="/profile">Profile</Link>
                         </li>
                         <li>
-                            <Link href="/conversations">Conversations {conversations.length === 0 ? "" : <span className="badge badge-info">{conversations.length}</span>}</Link>
+                            <Link href="/conversations">Conversations {conversations.length === 0 ? "" :
+                                <span className="badge badge-info">{conversations.length}</span>}</Link>
+                        </li>
+                        <li>
+                            <Link href="/chat">Chat</Link>
                         </li>
                     </> : <>
                         <li>
@@ -106,8 +120,8 @@ const Toolbar = () => {
                         </button>
                     </div>
                     :
-                    <button className="btn btn-primary">
-                        <Link href="/login">Login</Link>
+                    <button className="btn btn-primary" onClick={navLogin}>
+                        Login
                     </button>
                 }
             </div>

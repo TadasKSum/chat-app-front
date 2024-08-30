@@ -24,10 +24,6 @@ const Page = () => {
         fetchTalk(chatId)
     }, []);
 
-    useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [])
-
     async function fetchTalk(id) {
         const token = user.token;
         const res = await http.getAuth(`/get-single-talk/${id}`, token)
@@ -37,13 +33,13 @@ const Page = () => {
     }
 
     async function sendMessage() {
-        if (chatInput.current.value === "" || chatInput.current.value === undefined || chatInput.current.value === null) return
+        if (chatInput.current?.value === "" || chatInput.current?.value === undefined || chatInput.current?.value === null) return
         const token = user.token;
         const newMessage = {
             sender: user.username,
             senderId: user.id,
             content: chatInput.current?.value,
-            date: Date.now(),
+            time: Date.now(),
             avatar: user.picture,
             chatId: chatId
         }
@@ -55,10 +51,10 @@ const Page = () => {
     }
 
     return (
-        <div className="flex flex-col items-center p-5 pages-height">
+        <div className="flex flex-col items-center p-4 pages-height">
             <div className="flex flex-wrap justify-center gap-2 w-full component-height bg-base-100 rounded-box p-4">
                 <div className="flex flex-col w-full gap-3">
-                    <div className="bg-gray-900 rounded-box w-full p-4 max-h-[68vh] grow-[13] flex flex-col overflow-auto" ref={bottomRef}>
+                    <div className="bg-gray-900 rounded-box w-full p-4 max-h-[66vh] grow-[13] flex flex-col overflow-auto" ref={bottomRef}>
                         <AutoScroll>
                             {talk && talk.messages.map((message, index) => <Message key={index} message={message} />)}
                         </AutoScroll>
@@ -66,13 +62,14 @@ const Page = () => {
                     <div className="grow-[1] flex gap-3">
                         <div className="grow-[9]">
                             <textarea
-                                className="textarea textarea-bordered w-full h-[100%]"
+                                className="textarea textarea-bordered w-full h-[100%] resize-none"
                                 placeholder="Type your message here..."
                                 ref={chatInput}
                             ></textarea>
                         </div>
-                        <div className="grow-[1] flex flex-col items-center justify-center">
+                        <div className="grow-[1] flex flex-col items-center justify-center gap-2">
                             <button className="btn btn-primary w-full" onClick={sendMessage}>Send</button>
+                            <button className="btn btn-primary w-full" onClick={() => fetchTalk(chatId)}>Refresh</button>
                         </div>
                     </div>
                 </div>

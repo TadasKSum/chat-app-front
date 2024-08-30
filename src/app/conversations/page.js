@@ -28,9 +28,10 @@ const Page = () => {
     }
 
     return (
-        <div className="flex flex-col items-center p-5 pages-height">
+        <div className="flex flex-col items-center p-4 pages-height">
             <div className="flex flex-wrap justify-center gap-2 w-full component-height">
-                {conversations.length === 0 ? <div>No conversations</div> : conversations.map((chat, index) => <ConversationCard key={index} chat={chat} />)}
+                {conversations.length === 0 ? <div>No conversations</div> : conversations.map((chat, index) =>
+                    <ConversationCard key={index} chat={chat}/>)}
             </div>
         </div>
     );

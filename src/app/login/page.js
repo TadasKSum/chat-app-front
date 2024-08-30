@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import http from "@/plugins/http";
 import usePrivateStore from "@/store/privateStore";
 import useLoginStore from "@/store/loginStore";
+import useConversationStore from "@/store/conversationStore";
 import Cookies from 'js-cookie';
 
 const Page = () => {
@@ -22,6 +23,7 @@ const Page = () => {
     // Zustand
     const {user, setUser} = usePrivateStore()
     const {isLoggedIn, setIsLoggedIn} = useLoginStore()
+    const {setConversations} = useConversationStore()
 
     // Router
     const router = useRouter()
@@ -47,6 +49,8 @@ const Page = () => {
                 token: res.token,
             })
             setIsLoggedIn(true)
+            //
+            fetchConversations()
             // If checkbox is checked
             if (rememberMe) Cookies.set("chatToken", res.token);
             router.push("/profile")
@@ -58,6 +62,17 @@ const Page = () => {
     const rememberCheckboxControl = (event) => {
         setRememberMe(!rememberMe);
     };
+
+    async function fetchConversations() {
+        const token = user.token;
+        const data = {
+            request: "fetch me these"
+        }
+        const res = await http.postAuth("/get-conversations", data, token)
+        if(res.success) {
+            setConversations(res.data)
+        }
+    }
 
     return (
         <div className="flex flex-col items-center p-20 gap-2 pages-height">

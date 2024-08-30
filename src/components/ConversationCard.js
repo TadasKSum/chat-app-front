@@ -28,17 +28,19 @@ const ConversationCard = ({chat}) => {
         return time;
     }
     async function deleteConversation(conversationId) {
-        let chatId = conversationId;
-        let token = user.token;
+        if(confirm("Are you sure you want to delete conversation?")) {
+            let chatId = conversationId;
+            let token = user.token;
 
-        const data = {
-            chatId,
-            request: "delete ThIs"
-        }
+            const data = {
+                chatId,
+                request: "delete ThIs"
+            }
 
-        const res = await http.postAuth("/delete-conversation", data, token)
-        if (res.success) {
-            setConversations(res.data)
+            const res = await http.postAuth("/delete-conversation", data, token)
+            if (res.success) {
+                setConversations(res.data)
+            }
         }
     }
     function navigatePage() {
@@ -46,12 +48,13 @@ const ConversationCard = ({chat}) => {
     }
 
     return (
-        <div className="bg-base-100 border-base-300 rounded-box p-3 lg:w-1/3 h-[235px] flex flex-col gap-2">
-            <div>Conversation started: {convertTimestamp(Number(chat.startDate))}</div>
+        <div className="bg-base-100 border-base-300 rounded-box p-3 w-96 h-[250px] flex flex-col gap-2">
+            <div>Started: {convertTimestamp(Number(chat.startDate))}</div>
+            <div>Messages: <span className="badge badge-info">{chat.messages.length}</span></div>
             <div className="flex justify-between">
                 <div className="flex flex-col items-center">
                     <div className="avatar">
-                        <div className="w-24 rounded-full">
+                        <div className="w-20 rounded-full">
                             <img
                                 src={chat.participants[0].avatar}/>
                         </div>
@@ -61,7 +64,7 @@ const ConversationCard = ({chat}) => {
                 <div className="divider divider-horizontal">AND</div>
                 <div className="flex flex-col items-center">
                     <div className="avatar">
-                        <div className="w-24 rounded-full">
+                        <div className="w-20 rounded-full">
                             <img
                                 src={chat.participants[1].avatar}/>
                         </div>

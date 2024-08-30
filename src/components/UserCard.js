@@ -53,7 +53,7 @@ const UserCard = ({profile}) => {
             </div>*/}
             <div className="flex gap-2">
                 <button className="btn btn-primary min-w-16" onClick={navigate}>Info</button>
-                <button className="btn btn-primary min-w-16" onClick={startConversation}>Chat</button>
+                {isLoggedIn ? <button className="btn btn-primary min-w-16" onClick={startConversation}>Chat</button> : ""}
             </div>
         </div>
     );
