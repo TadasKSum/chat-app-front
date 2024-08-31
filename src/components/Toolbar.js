@@ -6,7 +6,6 @@ import Link from 'next/link';
 import usePrivateStore from "@/store/privateStore";
 import useLoginStore from "@/store/loginStore";
 import useConversationStore from "@/store/conversationStore";
-import useSingleTalk from "@/store/singleConversation";
 import Cookies from "js-cookie";
 
 const Toolbar = () => {
@@ -120,7 +119,7 @@ const Toolbar = () => {
                         </button>
                     </div>
                     :
-                    <button className="btn btn-primary" onClick={navLogin}>
+                    <button className="btn btn-primary" onClick={() => navLogin()}>
                         Login
                     </button>
                 }

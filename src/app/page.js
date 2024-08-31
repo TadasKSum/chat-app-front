@@ -3,6 +3,7 @@
 import Cookies from "js-cookie";
 import usePrivateStore from "@/store/privateStore";
 import useLoginStore from "@/store/loginStore";
+import useConversationStore from "@/store/conversationStore";
 import http from "@/plugins/http";
 import {useEffect} from "react";
 
@@ -11,6 +12,7 @@ export default function Home() {
     // Zustand
     const {setUser} = usePrivateStore();
     const {isLoggedIn, setIsLoggedIn} = useLoginStore()
+    const {setConversations} = useConversationStore()
 
     // Functions
     async function autoLogin() {
@@ -31,6 +33,7 @@ export default function Home() {
                 token: res.token,
             })
             setIsLoggedIn(true)
+            setConversations(res.conversations)
             Cookies.set("chatToken", res.token);
         }
     }

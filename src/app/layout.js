@@ -3,7 +3,7 @@ import "./globals.css";
 
 // Import Components
 import Toolbar from "@/components/Toolbar";
-import Footer from "../components/Footer";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,4 +24,4 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-}
+};
