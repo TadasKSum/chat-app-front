@@ -7,6 +7,8 @@ const usePrivateStore = create(
             username: "",
             nickname: "",
             picture: "",
+            description: "",
+            tags: null,
             id: "",
             token: ""
         },

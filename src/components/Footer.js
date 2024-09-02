@@ -12,7 +12,7 @@ const Footer = () => {
                     <Link className='text-gray-600 text-xs link-hover' href="/rules">Rules</Link>
                 </aside>
                 <aside>
-                    <p className='text-gray-400 text-xs'>Copyright © {new Date().getFullYear()} - All rights reserved by Chat App</p>
+                    <p className='text-gray-400 text-xs'>Copyright © {new Date().getFullYear()} - All rights reserved by C(h)at App</p>
                 </aside>
             </footer>
         </div>

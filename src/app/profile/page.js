@@ -11,7 +11,7 @@ import http from "@/plugins/http";
 const Page = () => {
 
     //zustand
-    const {user} = usePrivateStore();
+    const {user, setUser} = usePrivateStore();
     const {setConversations} = useConversationStore();
 
     useEffect(() => {
@@ -29,9 +29,22 @@ const Page = () => {
         }
     }
 
+    async function addDescription() {
+        let desc = prompt("Enter a description");
+        if (desc === "") return;
+        const token = user.token;
+        let data = {
+            description: desc
+        }
+        const res = await http.postAuth("/add-description", data, token)
+        if(res.success) {
+            return setUser({description: res.data.description})
+        }
+    }
+
     return (
         <div className="flex flex-col items-center p-5 gap-2 pages-height">
-            <div role="tablist" className="tabs tabs-lifted p-2 w-11/12">
+            <div role="tablist" className="tabs tabs-lifted p-2 w-9/12">
                 <input
                     type="radio"
                     name="my_tabs_2"
@@ -51,7 +64,14 @@ const Page = () => {
                     aria-label="Description"
                 />
                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-                    Tab content 2
+                    <div className="flex flex-col gap-3">
+                        <div className="h-[20rem] w-full bg-gray-900 rounded-box p-3">
+                            {user.description}
+                        </div>
+                        <div className="flex justify-end">
+                            <button className="btn btn-primary" onClick={addDescription}>Edit</button>
+                        </div>
+                    </div>
                 </div>
                 <input
                     type="radio"

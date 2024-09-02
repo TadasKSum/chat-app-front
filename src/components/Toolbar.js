@@ -77,7 +77,7 @@ const Toolbar = () => {
                         </>}
                     </ul>
                 </div>
-                <div className="btn btn-ghost text-xl"><Link href="/">Chat App</Link></div>
+                <div className="btn btn-ghost text-xl"><Link href="/">C(h)at App</Link></div>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal gap-1 px-1">

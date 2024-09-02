@@ -39,10 +39,12 @@ const UserCard = ({profile}) => {
     }
 
     return (
-        <div className="flex justify-between flex-col items-center bg-base-100 p-4 rounded-box min-w-48 h-64 mt-3 mb-3 gap-3">
+        <div className="flex flex-col items-center bg-base-100 p-4 rounded-box min-w-48 h-64 mt-3 mb-3 gap-3">
             <div className="avatar">
-                <div className="ring-primary ring-offset-base-100 w-20 rounded-full ring ring-offset-2">
-                    <img src={profile.picture}/>
+                <div class="avatar">
+                    <div class="w-32 rounded-xl">
+                        <img src={profile.picture} />
+                    </div>
                 </div>
             </div>
             <div className="text-xl">

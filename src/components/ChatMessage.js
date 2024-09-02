@@ -8,7 +8,6 @@ import socket from "@/plugins/socket";
 const ChatMessage = ({message}) => {
 
     const [check, setCheck] = useState(false);
-    const heart = "❤️"
 
     const {user} = usePrivateStore()
     const {setChat} = useChatStore();

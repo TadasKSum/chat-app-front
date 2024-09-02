@@ -35,22 +35,6 @@ const http = {
                 });
         });
     },
-    deleteAuth: (url, token) => {
-        const options = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: token,
-            },
-        };
-        return new Promise((resolve) => {
-            fetch(rootUrl + url, options)
-                .then((res) => res.json())
-                .then((res) => {
-                    resolve(res);
-                });
-        });
-    },
     get: (url) => {
         return new Promise((resolve) => {
             fetch(rootUrl + url)
