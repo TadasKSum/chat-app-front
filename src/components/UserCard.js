@@ -48,7 +48,7 @@ const UserCard = ({profile}) => {
                 </div>
             </div>
             <div className="text-xl">
-                {profile.nickname}
+                {profile.username}
             </div>
             {/*<div>
                 Online

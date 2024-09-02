@@ -40,6 +40,7 @@ const ConversationCard = ({chat}) => {
             const res = await http.postAuth("/delete-conversation", data, token)
             if (res.success) {
                 setConversations(res.data)
+                router.push("/")
             }
         }
     }

@@ -2,13 +2,21 @@
 
 import React, {useEffect, useState} from 'react';
 import http from "@/plugins/http";
-import {useParams} from "next/navigation";
+import usePrivateStore from "@/store/privateStore";
+import useConversationStore from "@/store/conversationStore";
+import useLoginStore from "@/store/loginStore";
+import {useParams, useRouter} from "next/navigation";
 
 const Page = () => {
 
-    const [user, setUser] = useState(null);
+    const [thisUser, setThisUser] = useState(null);
 
     const {userId} = useParams();
+    const router = useRouter();
+
+    const {user} = usePrivateStore();
+    const {setConversations} = useConversationStore();
+    const {isLoggedIn} = useLoginStore();
 
     useEffect(() => {
         fetchSingleUser()
@@ -17,7 +25,7 @@ const Page = () => {
     async function fetchSingleUser() {
         const res = await http.get("/single-user/"+userId);
         if (res.success) {
-            setUser(res.data);
+            setThisUser(res.data);
         }
     }
 
@@ -36,32 +44,51 @@ const Page = () => {
         return time;
     }
 
+    async function startConversation() {
+        if (!isLoggedIn) return alert("Login to start conversation")
+
+        const token = user.token;
+        const chatWith = thisUser._id;
+
+        const data = {
+            participant: chatWith
+        }
+
+        const res = await http.postAuth("/start-conversation", data, token)
+        if(res.success) {
+            setConversations(res.data)
+            return router.push("/conversations")
+        } else {
+            return alert(res.message)
+        }
+    }
+
     return (
         <div className="flex flex-col items-center p-5 gap-2 pages-height">
             <div className="flex justify-center rounded-box w-7/12 gap-3">
                 <div className="flex flex-col items-center gap-3">
                     <div className="avatar">
                         <div className="w-40 rounded-full">
-                            <img src={user && user.picture}/>
+                            <img src={thisUser && thisUser.picture}/>
                         </div>
                     </div>
                     <div className="text-2xl">
-                        {user && user.nickname}
+                        {thisUser && thisUser.username}
                     </div>
                     <div>
-                        Joined: {user && convertTimestamp(user.created)}
+                        Joined: {thisUser && convertTimestamp(thisUser.created)}
                     </div>
                 </div>
             </div>
             <div className="flex gap-1">
-                {user && user.tags.map((tag, index) => <div className="badge badge-accent" key={index}>{tag}</div>)}
+                {thisUser && thisUser.tags.map((tag, index) => <div className="badge badge-accent" key={index}>{tag}</div>)}
             </div>
             <div className="flex gap-1">
-                <button className="btn btn-primary">Start Conversation</button>
+                <button className="btn btn-primary" onClick={startConversation}>Start Conversation</button>
             </div>
             <div className="divider divider-primary"></div>
             <div>
-                {user && user.description}
+                {thisUser && thisUser.description}
             </div>
         </div>
     );
