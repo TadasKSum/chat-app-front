@@ -41,10 +41,8 @@ const UserCard = ({profile}) => {
     return (
         <div className="flex flex-col items-center bg-base-100 p-4 rounded-box min-w-48 h-64 mt-3 mb-3 gap-3">
             <div className="avatar">
-                <div class="avatar">
-                    <div class="w-32 rounded-xl">
-                        <img src={profile.picture} />
-                    </div>
+                <div className="w-32 rounded-xl">
+                    <img src={profile.picture}/>
                 </div>
             </div>
             <div className="text-xl">
