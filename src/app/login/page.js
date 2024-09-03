@@ -52,7 +52,7 @@ const Page = () => {
             })
             setIsLoggedIn(true)
             // If checkbox is checked
-            if (rememberMe) Cookies.set("chatToken", res.token);
+            if (rememberMe) Cookies.set("chatToken", res.token, { expires: 2 });
             router.push("/profile")
         } else {
             setErrorMessage(res.message)
